@@ -1,0 +1,10 @@
+---
+# Test if Wordpress is installed successfully
+
+# Test using bash script
+- name: Launching Bash script to test
+  local_action: command {{ test_bash_loc }} --host {{ wp_domain_name }} --cookie {{ cookie_file_loc }} --result {{ result_file_loc }}
+
+# Delete cookie file created
+- name: Delete cookie file that was created when testing
+  file: path={{ cookie_file_loc }} state=absent

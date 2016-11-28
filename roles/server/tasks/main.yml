@@ -1,0 +1,28 @@
+---
+# Update APT cache in Droplet
+- name: Update APT cache
+  apt:
+    update_cache=yes
+  become: yes
+
+# Install LAMP stack in Droplet using APT
+- name: Install LAMP using APT
+  apt:
+    name={{ item }}
+    state=present
+  become: yes
+  with_items:
+    - apache2
+    - mysql-server
+    - php5-mysql
+    - php5
+    - libapache2-mod-php5
+    - python-mysqldb
+    - git
+
+# Clean the www directory
+- name: Remove index.html file
+  file:
+    path="{{ wp_dest }}/index.html"
+    state=absent
+  become: yes

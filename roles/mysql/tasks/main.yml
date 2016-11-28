@@ -1,0 +1,13 @@
+---
+# Create DB in MySQL for WordPress
+- name: Create MySQL DB for WordPress
+  mysql_db:
+    name={{ wp_mysql_db }}
+    state=present
+
+# Create DB user in MySQL for WordPress
+- name: Create MySQL DB user for WordPress
+  mysql_user:
+    name={{ wp_mysql_user }}
+    password={{ wp_mysql_pw }}
+    priv={{ wp_mysql_db }}.*:ALL

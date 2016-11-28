@@ -1,0 +1,37 @@
+---
+# Install WP-ClI
+- name: Install WP-CLI
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: "/usr/local/bin/wp-cli"
+    validate_certs: no
+    force: true
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+# WP-ClI downloads WordPress core files
+- name: Download WordPress core files
+  command: "wp-cli core download --allow-root --path='{{ wp_dest }}/'"
+  become: yes
+
+#WP-ClI will do the neccessary DB configuration
+- name: WordPress DB configuration
+  command: wp-cli --allow-root core config
+            --path="{{ wp_dest }}"
+            --dbname="{{ wp_mysql_db }}"
+            --dbuser="{{ wp_mysql_user }}"
+            --dbpass="{{ wp_mysql_pw }}"
+            --dbprefix="wp_"
+  become: yes
+
+#WP-ClI will install WordPress
+- name: WordPress installation
+  command: wp-cli --allow-root core install
+            --path="{{ wp_dest }}"
+            --url="{{ wp_domain_name }}"
+            --title="{{ wp_site_title }}"
+            --admin_user="{{ wp_admin_user }}"
+            --admin_password="{{ wp_admin_pw }}"
+            --admin_email="{{ wp_admin_mail }}"

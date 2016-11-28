@@ -1,0 +1,10 @@
+---
+# Delete Wordpress Droplet from DigitalOcean
+- name: Delete Wordpress Droplet
+  digital_ocean: >
+    state=absent
+    command=droplet
+    name=wordpress-droplet
+    unique_name=yes
+    api_token={{ do_token }}
+  register: wordpress_droplet

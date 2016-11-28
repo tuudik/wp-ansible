@@ -1,0 +1,60 @@
+# Main configuration file is located in group_vars folder in file all.yml,
+# make sure you have defined the configuration variable there.
+
+# Create Droplet in DigitalOcean
+- hosts: digitalocean
+  roles:
+    # Role to create Droplet
+    - create_droplet
+
+# Install basic Python in Droplet, so that Ansible can run successfully in the Droplet
+- hosts: droplet
+  gather_facts: no
+  pre_tasks:
+    - name: 'Install Python2.7 for running Ansible in remote Machine'
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+# Main WordPress installation and testing play
+- hosts: droplet
+  gather_facts: yes
+
+  # WordPress Configuration
+  vars:
+    # Define DB name for WordPress
+    wp_mysql_db: ansible_wp_db
+    # Define MySQL user for WordPress
+    wp_mysql_user: ansible_wp_user
+    # Define MySQL password for WordPress
+    wp_mysql_pw: ansible_wp_pw
+    # Define www directory where to install WordPress
+    wp_dest: /var/www/html
+    # Define WordPress URL
+    wp_domain_name: "{{ ansible_default_ipv4.address }}"
+    # Define WordPress Site Title
+    wp_site_title: "Magical Ansible WordPress"
+    # Define WordPress admin username
+    wp_admin_user: admin
+    # Define WordPress admin password
+    wp_admin_pw: admin
+    # Define WordPress admin e-mail address
+    wp_admin_mail: admin@admin.com
+
+  roles:
+    # Role to set up LAMP stack
+    - server
+    # Role to install neccessary extensions for php
+    - php
+    # Role to create MySQL DB and DB user for WordPress
+    - mysql
+    # Role to install WP-CLI and WordPress using WP-CLI
+    - wordpress
+    # Role to test the installation
+    - test
+
+# Delete the Droplet created in DigitalOcean
+- hosts: digitalocean
+  gather_facts: yes
+
+  roles:
+    # Role to delete Droplet
+    - delete_droplet

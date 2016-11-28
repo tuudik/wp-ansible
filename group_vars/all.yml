@@ -1,0 +1,16 @@
+---
+# DigitalOcean configuration, specify token here:
+do_token: YOUR_TOKEN_HERE
+
+# SSH key to use for connecting to DigitalOcean Droplet, if SSH key doesn't exist, Ansible will create one
+ssh_key: 'YOUR_SSH_KEY_LOCATION'
+
+# Pause duration in seconds until SSH connection is opened to newly created droplet
+pause_duration: 15
+
+# Test Bash Script location
+test_bash_loc: "{{ playbook_dir }}/test.sh"
+# Test Bash Script result location
+result_file_loc: "{{ playbook_dir }}/result-{{ ansible_date_time.iso8601 }}.txt"
+# Test Bash Script cookie location
+cookie_file_loc: "{{ playbook_dir }}/cookie.txt"

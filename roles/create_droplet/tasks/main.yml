@@ -1,0 +1,47 @@
+---
+# Checking if SSH key exists, if not then creates one
+- name: Check if SSH key exists in local machine
+  user: >
+    name={{ ansible_user_id }}
+    generate_ssh_key=yes
+    ssh_key_file={{ ssh_key }}
+
+# Checking if SSH key exists in DigitalOcean
+- name: Check if SSH key exists in DigitalOcean
+  digital_ocean: >
+    state=present
+    command=ssh
+    name=ansible_ssh_key
+    ssh_pub_key={{ lookup('file', '{{ ssh_key }}.pub') }}
+    api_token={{ do_token }}
+  register: ansible_ssh_key
+
+# Create Droplet for Wordpress installation
+- name: Check if Droplet exists, if not then create one
+  digital_ocean: >
+    state=present
+    command=droplet
+    name=wordpress-droplet
+    unique_name=yes
+    size_id=512mb
+    region_id=fra1
+    image_id=ubuntu-14-04-x64
+    ssh_key_ids={{ ansible_ssh_key.ssh_key.id }}
+    api_token={{ do_token }}
+  register: wordpress_droplet
+# Print out Droplet IP
+- debug: msg="Wordpress Droplet IP is {{ wordpress_droplet.droplet.ip_address }}"
+- add_host: name={{ wordpress_droplet.droplet.ip_address }} groups=droplet ansible_user=root ansible_ssh_private_key_file={{ ssh_key }}
+
+# Save Wordpress Droplet IP for next roles
+- name: Save Wordpress Droplet IP
+  set_fact:
+    wordpress_droplet_ip: "{{ wordpress_droplet.droplet.ip_address }}"
+
+# Pause role for defined seconds to wait until the newly created Droplet is up and running
+- name: Pause for {{ pause_duration }} seconds for remote machine to come up
+  pause: seconds={{ pause_duration }}
+
+# Use ssh-keyscan to add newly created Droplet key to known_hosts
+- name: 'Run ssh-keyscan to add keys to known_hosts'
+  local_action: shell ssh-keyscan {{ wordpress_droplet.droplet.ip_address }} >> ~/.ssh/known_hosts

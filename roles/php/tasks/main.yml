@@ -1,0 +1,10 @@
+---
+# Install neccessary extensions for php
+- name: Install extensions for php
+  apt:
+    name={{ item }}
+    state=present
+  become: yes
+  with_items:
+    - php5-gd
+    - libssh2-php
