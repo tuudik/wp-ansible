@@ -75,6 +75,7 @@ git clone https://github.com/tuudik/wp-ansible.git
 ## Ansible playbook ##
 
 This Ansible playbook will do the following:
+
 1. Create Droplet in DigitalOcean
 2. Setup LAMP stack in Droplet
 3. Install WP-CLI and then WordPress by using WP-CLI
