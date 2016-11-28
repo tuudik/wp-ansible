@@ -1,11 +1,11 @@
 # PD development test task
 ## Environment description ##
-**Control Machine:** Macbook Pro with macOS Sierra 10.12.1
-**Provisioning cloud service:** [DigitalOcean](https://www.digitalocean.com) through APIv2
-**Web application:** [WordPress 4.6.1](https://wordpress.org) with [WP-CLI](https://wp-cli.org)
-**Tool for automation:** [Ansible 2.2.0.0](http://docs.ansible.com/ansible/index.html)
-**Tool for testing:** [Small bash script](test.sh)
-**Remote machine:** Ubuntu 14.04.05 x64
+- **Control Machine:** Macbook Pro with macOS Sierra 10.12.1
+- **Provisioning cloud service:** [DigitalOcean](https://www.digitalocean.com) through APIv2
+- **Web application:** [WordPress 4.6.1](https://wordpress.org) with [WP-CLI](https://wp-cli.org)
+- **Tool for automation:** [Ansible 2.2.0.0](http://docs.ansible.com/ansible/index.html)
+- **Tool for testing:** [Small bash script](test.sh)
+- **Remote machine:** Ubuntu 14.04.05 x64
 
 ### Dependencies ###
  - [Homebrew](http://brew.sh) to install Python 2.7 (PS! Python can be also installed also just by downloading the "pkg" from Python website)
