@@ -26,27 +26,33 @@ To install Python 2.7 launch the command below in Terminal:
     brew install python
 #### 3. Install PIP ####
 To instal Python Package Manager PIP and update it, launch the commands below:
-
+```
     sudo easy_install pip
     sudo pip install --upgrade pip
+```
 #### 4. Install Ansible and dopy ####
 To install Ansible and dopy launch the following commands in Terminal:
-
+```
     sudo pip install ansible
     sudo pip install dopy
+```
 #### 5. Make configuration files for Ansible ####
 ##### 5.1 Create configuration folder #####
     sudo mkdir /etc/ansible && cd /usr/local/etc/ansible
 ##### 5.2 Create /etc/ansible/ansible.cfg #####
     sudo vim /etc/ansible/ansible.cfg
 We want Ansible to use particular hosts file so the content should be:
+```
     [defaults]
     hostfile = hosts
+```
 ##### 5.3 Create /etc/ansible/hosts #####
     sudo vim /etc/ansible/hosts
 To run ansible locally since we cannot run the commands from the beginnning from remote machine, we need to define it like this:
-    [digitalocean]
-    localhost ansible_connection=local ansible_python_interpreter=python
+```
+[digitalocean]
+localhost ansible_connection=local ansible_python_interpreter=python
+```
 ### Generate DigitalOcean Personal Access Token to use APIv2 ###
 To use DigitalOcean APIv2, it's neccessary to have existing Personal Access Token that will be used later in Ansible Playbook.
 
@@ -61,7 +67,9 @@ For generating DO Personal Access Token:
     
 ### Clone repository ###
 This can be done simply by running command below:
-    git clone https://github.com/tuudik/wp-ansible.git
+```
+git clone https://github.com/tuudik/wp-ansible.git
+```
 
 ## Ansible playbook ##
 
@@ -122,15 +130,19 @@ roles
 
 ### Configuration in Ansible playbook ###
 After cloning repository, it's neccessary that you checked the configuration [here](group_vars/all.yml) and make the neccessary changes atleast for following:
+```
     # DigitalOcean configuration, specify token here:
     do_token: YOUR_TOKEN_HERE
     # SSH key to use for connecting to DigitalOcean Droplet, if SSH key doesn't exist, Ansible will create one
     ssh_key: 'YOUR_SSH_KEY_LOCATION'
-
+```
 ### Running ansible playbook ###
 To run Ansible playbook launch following command in playbook directory:
-    ansible-playbook main_playbook.yml
-
+```
+ansible-playbook main_playbook.yml
+```
 #### Test results ####
 Test results are saved by default into playbook directory, this can be changed when modifying [group_vars/all.yml](group_vars/all.yml) following line:
-    result_file_loc: "{{ playbook_dir }}/result-{{ ansible_date_time.iso8601 }}.txt"
+```
+result_file_loc: "{{ playbook_dir }}/result-{{ ansible_date_time.iso8601 }}.txt"
+```
