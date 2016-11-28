@@ -77,47 +77,49 @@ The test is pretty simple [bash](test.sh) script that will check that webadmin l
 
 ## Structure of this Ansible playbook ##
 This Ansible playbook is divided into roles, there are 7 different roles:
-* create_droplet - This is for creating Droplet in DigitalOcean
-* delete_droplet - This is for deleting Droplet in DigitalOcean
-* mysql - This is for setting up MySQL in Droplet
-* php - This is for setting up PHP in Droplet
-* server - This is for updating APT cache and install LAMP using APT and also clears the www directory
-* test - This is where the testing is done
-* wordpress - This is for installing WP-CLI for installing and setting up WordPress
+- create_droplet - This is for creating Droplet in DigitalOcean
+- delete_droplet - This is for deleting Droplet in DigitalOcean
+- mysql - This is for setting up MySQL in Droplet
+- php - This is for setting up PHP in Droplet
+- server - This is for updating APT cache and install LAMP using APT and also clears the www directory
+- test - This is where the testing is done
+- wordpress - This is for installing WP-CLI for installing and setting up WordPress
 
 All playbook files are commented for easier understanding.
 
 The structure of this ansible playbook is as following:
-    main_playbook.yml
-    test.sh
-    README.md
-    groups_vars
-    |-all.yml
-    roles
-    |-create_droplet
-      |-tasks
-        |-main.yml
-    |-delete_droplet
-      |-tasks
-        |-main.yml
-    |-mysql
-      |-tasks
-        |-main.yml
-    |-php
-      |-tasks
-        |-main.yml
-    |-server
-      |-tasks
-        |-main.yml
-    |-test
-      |-tasks
-        |-main.yml
-    |-wordpress
-      |-tasks
-        |-main.yml
-      |-handles
-        |-main.yml
-    
+```
+main_playbook.yml
+test.sh
+README.md
+groups_vars
+|-all.yml
+roles
+|-create_droplet
+ |-tasks
+    |-main.yml
+|-delete_droplet
+  |-tasks
+    |-main.yml
+|-mysql
+  |-tasks
+    |-main.yml
+|-php
+  |-tasks
+    |-main.yml
+|-server
+  |-tasks
+    |-main.yml
+|-test
+  |-tasks
+    |-main.yml
+|-wordpress
+  |-tasks
+    |-main.yml
+  |-handles
+    |-main.yml
+```
+
 ### Configuration in Ansible playbook ###
 After cloning repository, it's neccessary that you checked the configuration [here](group_vars/all.yml) and make the neccessary changes atleast for following:
     # DigitalOcean configuration, specify token here:
