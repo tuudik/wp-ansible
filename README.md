@@ -57,6 +57,7 @@ localhost ansible_connection=local ansible_python_interpreter=python
 To use DigitalOcean APIv2, it's neccessary to have existing Personal Access Token that will be used later in Ansible Playbook.
 
 For generating DO Personal Access Token:
+
 1. Log in to your DigitalOcean Account,
 2. Select "API" from the main menu,
 3. Click on "Generate New Token",
